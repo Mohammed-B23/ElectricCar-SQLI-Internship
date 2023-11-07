@@ -1,0 +1,124 @@
+<div th:fragment="header2">
+  <div class="container">
+  <header class="header">
+    <div class="container">
+      <a th:href="@{/home}" style="color: #00d0ff;text-decoration-line: none;">
+        <div class="logo" style="display: flex" >
+          <img src="/image/power-supply.png" style="width: 45px;height: 45px;margin-bottom: 10px"  >
+            <h1>Electric Car</h1>
+        </div>
+      </a>
+      <ul>
+        <li data-filter="" th:class="${request.requestURI == '/home' ? 'active' : ''}">
+          <a th:href="@{/home}">HOME</a>
+        </li>
+        <li data-filter="" th:class="${request.requestURI == '/viewCars' ? 'active' : ''}">
+          <a th:href="@{/viewCars}">CAR</a>
+        </li>
+        <li data-filter="" th:class="${request.requestURI == '/viewBrands' ? 'active' : ''}">
+          <a th:href="@{/viewBrands}">BRAND</a>
+        </li>
+        <li data-filter="" th:class="${request.requestURI == '/viewModels' ? 'active' : ''}">
+          <a th:href="@{/viewModels}">MODEL</a>
+        </li>
+        <li data-filter="" th:class="${request.requestURI == '/viewStates' ? 'active' : ''}">
+          <a th:href="@{/viewStates}">MAP</a>
+        </li>
+      </ul>
+
+      <div class="views" style="display: flex">
+          <div style="margin: 0 40px" >
+            <div th:id="cardView" >
+              <input type="hidden" th:value="card" name="viewType" th:id="viewType" >
+              <img src="/image/menu-grid.png" style="width: 35px;height:35px; cursor: pointer;" alt="Button" >
+            </div>
+          </div>
+         <div>
+          <div th:id="listView">
+            <input type="hidden" th:value="list" name="viewType" th:id="viewType2" >
+            <img src="/image/list-view2.png" style="width: 35px;height:35px; cursor: pointer;" alt="Button" >
+          </div>
+         </div>
+      </div>
+      <div class="bars">
+        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+      </div>
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-body" style="padding: 0 0">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 100%;height: 100%">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <span class="fs-4">Menu</span>
+          </a>
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+              <a th:href="@{/home}" th:class="${request.requestURI == '/home' ? 'nav-link active' : 'nav-link text-white'} " aria-current="page">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+                Home
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/viewCars}" th:class="${request.requestURI == '/viewCars' ? 'nav-link active' : 'nav-link text-white'}">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                Car
+              </a>
+            </li>
+            <li>
+              <a th:href="@{viewBrands}" th:class="${request.requestURI == '/viewBrands' ? 'nav-link active' : 'nav-link text-white'}">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                Brand
+              </a>
+            </li>
+            <li>
+              <a th:href="@{viewModels}" th:class="${request.requestURI == '/viewModels' ? 'nav-link active' : 'nav-link text-white'}">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+                Model
+              </a>
+            </li>
+            <li>
+              <a th:href="@{/viewStates}" th:class="${request.requestURI == '/viewStates' ? 'nav-link active' : 'nav-link text-white'}">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                Map
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+  </div>
+  <script>
+    $('#cardView').click(function (){
+      let vr = $('#viewType').val();
+
+      updateViewTypeAndReload(vr);
+    });
+
+    $('#listView').click(function (){
+      let vr = $('#viewType2').val();
+
+      updateViewTypeAndReload(vr);
+    });
+
+    function updateViewTypeAndReload(newViewType) {
+      // Send a GET request to update the session variable on the backend
+      fetch(`/update-view-type?newViewType=${encodeURIComponent(newViewType)}`)
+              .then(response => {
+                if (response.ok) {
+                  location.reload();
+                }
+              })
+              .catch(error => {
+                console.error('Error updating view type:', error);
+              });
+    }
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</div>

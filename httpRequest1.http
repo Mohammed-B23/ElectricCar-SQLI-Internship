@@ -1,0 +1,15 @@
+GET http://localhost:8084/api/country/Sedgwick
+Accept: application/json
+
+###
+POST http://localhost:8084/api
+Content-Type: application/json
+
+{
+  "name":"mohammed",
+  "familyName": "BOUSSETTA",
+  "age": 22,
+  "email": "mohammed@gmail.com"
+}
+
+###
